@@ -64,7 +64,7 @@ namespace MVCApp.Controllers
         }
 
         // GET: Ninjas/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
             ViewBag.TopicId = new SelectList(db.Topics, "Id", "PostText");
             return View();

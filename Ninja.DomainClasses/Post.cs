@@ -17,7 +17,7 @@ namespace NinjaDomain.Classes
         public Topic Topic { get; set; }
         public int TopicId { get; set; }
         public List<NinjaEquipment> EquipmentOwned { get; set; }
-        public DateTime DateOfBirth { get; set; }
+       
         public string PostText { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }

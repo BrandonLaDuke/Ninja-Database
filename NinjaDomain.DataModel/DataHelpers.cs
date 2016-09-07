@@ -23,22 +23,22 @@ namespace NinjaDomain.DataModel
           var turtleClan = context.Topics.Add(new Topic { });
           var amClan = context.Topics.Add(new Topic { });
 
-          var j = new Post
-          {
-              Name = "JulieSan",
-              ServedInOniwaban = false,
-              DateOfBirth = new DateTime(1980, 1, 1),
+          //var j = new Post
+          //{
+          //    Name = "JulieSan",
+          //    ServedInOniwaban = false,
+          //    DateOfBirth = new DateTime(1980, 1, 1),
 
 
-          };
-          var s = new Post
-          {
-              Name = "SampsonSan",
-              ServedInOniwaban = false,
-              DateOfBirth = new DateTime(2008, 1, 28),
+          //};
+          //var s = new Post
+          //{
+          //    Name = "SampsonSan",
+          //    ServedInOniwaban = false,
+          //    DateOfBirth = new DateTime(2008, 1, 28),
 
 
-          };
+          //};
       }
     }
   }
