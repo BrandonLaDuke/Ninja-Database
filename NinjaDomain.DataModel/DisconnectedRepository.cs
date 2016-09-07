@@ -9,96 +9,96 @@ namespace NinjaDomain.DataModel
 {
   public class DisconnectedRepository
   {
-    public List<Ninja> GetQueryableNinjasWithClan(string query, int page, int pageSize) {
-      using (var context = new NinjaContext()) {
-        context.Database.Log = message => Debug.WriteLine(message);
-        var linqQuery = context.Ninjas.Include(n => n.Clan);
-        if (!string.IsNullOrEmpty(query)) {
-          linqQuery = linqQuery.Where(n => n.Name.Contains(query));
-        }
-        if (page > 0 && pageSize > 0) {
-          linqQuery = linqQuery.OrderBy(n => n.Name).Skip(page - 1).Take(pageSize);
-        }
+    //public List<Posts> GetQueryableNinjasWithClan(string query, int page, int pageSize) {
+    //  using (var context = new NinjaContext()) {
+    //    context.Database.Log = message => Debug.WriteLine(message);
+    //    var linqQuery = context.Posts.Include(n => n.Topic);
+    //    if (!string.IsNullOrEmpty(query)) {
+    //      linqQuery = linqQuery.Where(n => n.Name.Contains(query));
+    //    }
+    //    if (page > 0 && pageSize > 0) {
+    //      linqQuery = linqQuery.OrderBy(n => n.Name).Skip(page - 1).Take(pageSize);
+    //    }
 
-        return linqQuery.ToList();
-      }
-    }
+    //    return linqQuery.ToList();
+    //  }
+    //}
 
-    public List<Ninja> GetNinjasWithClan() {
-      using (var context = new NinjaContext()) {
-        //return context.Ninjas.Include(n => n.Clan).ToList();
-        return context.Ninjas.AsNoTracking().Include(n => n.Clan).ToList();
-      }
-    }
+    //public List<Posts> GetNinjasWithClan() {
+    //  using (var context = new NinjaContext()) {
+    //    //return context.Posts.Include(n => n.Topic).ToList();
+    //    return context.Posts.AsNoTracking().Include(n => n.Topic).ToList();
+    //  }
+    //}
 
-    public Ninja GetNinjaWithEquipment(int id) {
+    public Post GetNinjaWithEquipment(int id) {
       using (var context = new NinjaContext()) {
-        return context.Ninjas.AsNoTracking().Include(n => n.EquipmentOwned)
+        return context.Posts.AsNoTracking().Include(n => n.EquipmentOwned)
           .FirstOrDefault(n => n.Id == id);
       }
     }
 
-    public Ninja GetNinjaWithEquipmentAndClan(int id) {
+    //public Posts GetNinjaWithEquipmentAndClan(int id) {
+    //  using (var context = new NinjaContext()) {
+    //    return context.Topics.AsNoTracking().Include(n => n.EquipmentOwned)
+    //      .Include(n => n.Topic)
+    //      .FirstOrDefault(n => n.Id == id);
+    //  }
+    //}
+
+    //public IEnumerable GetClanList() {
+    //  using (var context = new NinjaContext()) {
+    //    return context.Topics.AsNoTracking().OrderBy(c => c.ClanName)
+    //      .Select(c => new { c.Id, c.ClanName }).ToList();
+    //  }
+    //}
+
+    public Post GetNinjaById(int id) {
       using (var context = new NinjaContext()) {
-        return context.Ninjas.AsNoTracking().Include(n => n.EquipmentOwned)
-          .Include(n => n.Clan)
-          .FirstOrDefault(n => n.Id == id);
+        return context.Posts.Find(id);
+        // return context.Posts.AsNoTracking().SingleOrDefault(n => n.Id == id);
       }
     }
 
-    public IEnumerable GetClanList() {
+    public void SaveUpdatedNinja(Post posts) {
       using (var context = new NinjaContext()) {
-        return context.Clans.AsNoTracking().OrderBy(c => c.ClanName)
-          .Select(c => new { c.Id, c.ClanName }).ToList();
-      }
-    }
-
-    public Ninja GetNinjaById(int id) {
-      using (var context = new NinjaContext()) {
-        return context.Ninjas.Find(id);
-        // return context.Ninjas.AsNoTracking().SingleOrDefault(n => n.Id == id);
-      }
-    }
-
-    public void SaveUpdatedNinja(Ninja ninja) {
-      using (var context = new NinjaContext()) {
-        context.Entry(ninja).State = EntityState.Modified;
+        context.Entry(posts).State = EntityState.Modified;
         context.SaveChanges();
       }
     }
 
-    public void SaveNewNinja(Ninja ninja) {
+    public void SaveNewNinja(Post post) {
       using (var context = new NinjaContext()) {
-        context.Ninjas.Add(ninja);
+        context.Posts.Add(post);
         context.SaveChanges();
       }
     }
 
-    public void DeleteNinja(int ninjaId) {
+    public void DeleteNinja(int postId) {
       using (var context = new NinjaContext()) {
-        var ninja = context.Ninjas.Find(ninjaId);
-        context.Entry(ninja).State = EntityState.Deleted;
+        var post = context.Posts.Find(postId);
+        context.Entry(post).State = EntityState.Deleted;
         context.SaveChanges();
       }
     }
 
-    public void SaveNewEquipment(NinjaEquipment equipment, int ninjaId) {
+    public void SaveNewEquipment(NinjaEquipment equipment, int postId) {
       //paying the price of not having a foreign key here. 
       //reason #857 why I prefer foreign keys!
       using (var context = new NinjaContext()) {
-        var ninja = context.Ninjas.Find(ninjaId);
-        ninja.EquipmentOwned.Add(equipment);
+        var post = context.Posts.Find(postId);
+        post.EquipmentOwned.Add(equipment);
 
         context.SaveChanges();
       }
     }
 
-    public void SaveUpdatedEquipment(NinjaEquipment equipment, int ninjaId) {
+    public void SaveUpdatedEquipment(NinjaEquipment equipment, int postId) {
       //paying the price of not having a foreign key here. 
       //reason #858 why I prefer foreign keys!
       using (var context = new NinjaContext()) {
         var equipmentWithNinjaFromDatabase = 
-          context.Equipment.Include(n => n.Ninja).FirstOrDefault(e => e.Id == equipment.Id);
+          context.Equipment.Include(n => n.Post).FirstOrDefault(e => e.Id == equipment.Id);
 
         context.Entry(equipmentWithNinjaFromDatabase).CurrentValues.SetValues(equipment);
 

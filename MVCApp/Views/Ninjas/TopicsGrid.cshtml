@@ -1,19 +1,19 @@
-﻿@model IEnumerable<NinjaDomain.Classes.Clan>
+﻿@model IEnumerable<NinjaDomain.Classes.Topic>
 
 @{
-    ViewBag.Title = "Clans";
+    ViewBag.Title = "Topics";
     Layout = null;
 }
 
-<h2>Clans</h2>
+<h2>Topics</h2>
 
 <p>
-    @Html.ActionLink("Create New Clan", "CreateClan")
+    @Html.ActionLink("Add Topic", "CreateTopic")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ClanName)
+            @Html.DisplayNameFor(model => model.TopicSubject)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateCreated)
@@ -28,7 +28,7 @@
     <tr>
        
         <td>
-            @Html.DisplayFor(modelItem => item.ClanName)
+            @Html.DisplayFor(modelItem => item.TopicSubject)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateCreated, "{0:d}")
@@ -37,9 +37,8 @@
             @Html.DisplayFor(modelItem => item.DateModified, "{0:d}")
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditClan", new { id=item.Id }) |
-            @Html.ActionLink("Details", "ClanDetails", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteClan", new { id=item.Id })
+            @Html.ActionLink("Create Post", "Create", new { id=item.Id }) |
+            @Html.ActionLink("See More", "Details", new { id=item.Id })
         </td>
     </tr>
 }

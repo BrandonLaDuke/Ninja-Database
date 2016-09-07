@@ -8,8 +8,8 @@ namespace NinjaDomain.DataModel
 {
   public class NinjaContext : DbContext
   {
-    public DbSet<Ninja> Ninjas { get; set; }
-    public DbSet<Clan> Clans { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<Topic> Topics { get; set; }
     public DbSet<NinjaEquipment> Equipment { get; set; }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder) {

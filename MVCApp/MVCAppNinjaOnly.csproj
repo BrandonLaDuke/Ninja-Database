@@ -168,12 +168,12 @@
     <Content Include="Views\Ninjas\Edit.cshtml" />
     <Content Include="Views\Ninjas\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
-    <Content Include="Views\Ninjas\NinjaGrid.cshtml" />
-    <Content Include="Views\Ninjas\ClanGrid.cshtml" />
-    <Content Include="Views\Ninjas\CreateClan.cshtml" />
-    <Content Include="Views\Ninjas\DeleteClan.cshtml" />
-    <Content Include="Views\Ninjas\EditClan.cshtml" />
-    <Content Include="Views\Ninjas\ClanDetails.cshtml" />
+    <Content Include="Views\Ninjas\PostsGrid.cshtml" />
+    <Content Include="Views\Ninjas\TopicsGrid.cshtml" />
+    <Content Include="Views\Ninjas\CreateTopic.cshtml" />
+    <Content Include="Views\Ninjas\DeleteTopic.cshtml" />
+    <Content Include="Views\Ninjas\EditTopic.cshtml" />
+    <Content Include="Views\Ninjas\TopicDeatils.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

@@ -18,20 +18,20 @@ namespace MVCApp.Controllers
         // GET: Ninjas
         public ActionResult Index()
         {
-            var ninjas = db.Ninjas.Include(n => n.Clan);
-            return View(ninjas.ToList());
+            var posts = db.Posts.Include(n => n.Topic);
+            return View(posts.ToList());
         }
 
-        public ActionResult NinjaGrid()
+        public ActionResult PostsGrid()
         {
-            var ninjas = db.Ninjas.Include(n => n.Clan);
-            return View(ninjas.ToList());
+            var posts = db.Posts.Include(n => n.Topic);
+            return View(posts.ToList());
         }
 
-        public ActionResult ClanGrid()
+        public ActionResult TopicsGrid()
         {
-            var clans = db.Clans;
-            return View(clans.ToList());
+            var topics = db.Topics;
+            return View(topics.ToList());
         }
 
         // GET: Ninjas/Details/5
@@ -41,37 +41,37 @@ namespace MVCApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ninja ninja = db.Ninjas.Find(id);
-            if (ninja == null)
+            Post post = db.Posts.Find(id);
+            if (post == null)
             {
                 return HttpNotFound();
             }
-            return View(ninja);
+            return View(post);
         }
 
-        public ActionResult ClanDetails(int? id)
+        public ActionResult TopicDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Clan clan = db.Clans.Find(id);
-            if (clan == null)
+            Topic topic = db.Topics.Find(id);
+            if (topic == null)
             {
                 return HttpNotFound();
             }
-            return View(clan);
+            return View(topic);
         }
 
         // GET: Ninjas/Create
         public ActionResult Create()
         {
-            ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName");
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "PostText");
             return View();
         }
-        public ActionResult CreateClan()
+        public ActionResult CreateTopic()
         {
-            ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName");
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "ClanName");
             return View();
         }
 
@@ -80,32 +80,32 @@ namespace MVCApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,ServedInOniwaban,ClanId,DateOfBirth,DateCreated,DateModified")] Ninja ninja)
+        public ActionResult Create([Bind(Include = "Id,PostText,DateCreated,DateModified")] Post post)
         {
             if (ModelState.IsValid)
             {
-                db.Ninjas.Add(ninja);
+                db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName");
-            return View(ninja);
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "ClanName");
+            return View(post);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateClan([Bind(Include = "Id,ClanName,DateCreated,DateModified")] Clan clan)
+        public ActionResult CreateTopic([Bind(Include = "Id,TopicSubject,DateCreated,DateModified")] Topic topic)
         {
             if (ModelState.IsValid)
             {
-                db.Clans.Add(clan);
+                db.Topics.Add(topic);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName", clan);
-            return View(clan);
+            ViewBag.ClanId = new SelectList(db.Topics, "Id", "TopicSubject", topic);
+            return View(topic);
         }
 
         // GET: Ninjas/Edit/5
@@ -115,30 +115,30 @@ namespace MVCApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ninja ninja = db.Ninjas.Find(id);
-            if (ninja == null)
+            Post post = db.Posts.Find(id);
+            if (post == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName", ninja.ClanId);
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "ClanName", post.TopicId);
     
-            return View(ninja);
+            return View(post);
         }
 
-        public ActionResult EditClan(int? id)
+        public ActionResult EditTopic(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Clan clan = db.Clans.Find(id);
-            if (clan == null)
+            Topic topic = db.Topics.Find(id);
+            if (topic == null)
             {
                 return HttpNotFound();
             }
             //ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName", clan);
 
-            return View(clan);
+            return View(topic);
         }
 
         // POST: Ninjas/Edit/5
@@ -146,16 +146,16 @@ namespace MVCApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,ServedInOniwaban,ClanId,DateOfBirth,DateCreated,DateModified")] Ninja ninja)
+        public ActionResult Edit([Bind(Include = "Id,Name,ServedInOniwaban,ClanId,DateOfBirth,DateCreated,DateModified")] Post post)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ninja).State = EntityState.Modified;
+                db.Entry(post).State = EntityState.Modified;
                         db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName", ninja.ClanId);
-            return View(ninja);
+            ViewBag.TopicId = new SelectList(db.Topics, "Id", "ClanName", post.TopicId);
+            return View(post);
         }
 
         // POST: Ninjas/Edit/5
@@ -163,16 +163,16 @@ namespace MVCApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditClan([Bind(Include = "Id,ClanName,DateCreated,DateModified")] Clan clan)
+        public ActionResult EditTopic([Bind(Include = "Id,ClanName,DateCreated,DateModified")] Topic topic)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(clan).State = EntityState.Modified;
+                db.Entry(topic).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClanId = new SelectList(db.Clans, "Id", "ClanName", clan);
-            return View(clan);
+            ViewBag.ClanId = new SelectList(db.Topics, "Id", "ClanName", topic);
+            return View(topic);
         }
 
         // GET: Ninjas/Delete/5
@@ -182,26 +182,26 @@ namespace MVCApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ninja ninja = db.Ninjas.Find(id);
-            if (ninja == null)
+            Post post = db.Posts.Find(id);
+            if (post == null)
             {
                 return HttpNotFound();
             }
-            return View(ninja);
+            return View(post);
         }
 
-        public ActionResult DeleteClan(int? id)
+        public ActionResult DeleteTopic(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Clan clan = db.Clans.Find(id);
-            if (clan == null)
+            Topic topic = db.Topics.Find(id);
+            if (topic == null)
             {
                 return HttpNotFound();
             }
-            return View(clan);
+            return View(topic);
         }
 
         // POST: Ninjas/Delete/5
@@ -209,8 +209,8 @@ namespace MVCApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ninja ninja = db.Ninjas.Find(id);
-            db.Ninjas.Remove(ninja);
+            Post post = db.Posts.Find(id);
+            db.Posts.Remove(post);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -225,12 +225,12 @@ namespace MVCApp.Controllers
         }
 
         // POST: Ninjas/Delete/5
-        [HttpPost, ActionName("DeleteClan")]
+        [HttpPost, ActionName("DeleteTopic")]
         [ValidateAntiForgeryToken]
-        public ActionResult ClanDeleteConfirmed(int id)
+        public ActionResult TopicDeleteConfirmed(int id)
         {
-            Clan clan = db.Clans.Find(id);
-            db.Clans.Remove(clan);
+            Topic topic = db.Topics.Find(id);
+            db.Topics.Remove(topic);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -11,34 +11,35 @@ namespace NinjaDomain.DataModel
   {
     private readonly NinjaContext _context = new NinjaContext();
 
-    public Ninja GetNinjaWithEquipment(int id)
+    public Post GetNinjaWithEquipment(int id)
     {
-      return _context.Ninjas.Include(n => n.EquipmentOwned)
+      return _context.Posts.Include(n => n.EquipmentOwned)
         .FirstOrDefault(n => n.Id == id);
     }
 
-    public Ninja GetNinjaById(int id)
+    public Post GetNinjaById(int id)
     {
-      return _context.Ninjas.Find(id);
+      return _context.Posts.Find(id);
     }
 
-    public List<Ninja> GetNinjas()
+    public List<Post> GetNinjas()
     {
-      return _context.Ninjas.ToList();
+      return _context.Posts.ToList();
     }
 
     public IEnumerable GetClanList()
     {
-      return _context.Clans.OrderBy(c => c.ClanName).Select(c => new {c.Id, c.ClanName}).ToList();
+        return null;
+      //return _context.Topics.OrderBy(c => c.ClanName).Select(c => new {c.Id, c.ClanName}).ToList();
     }
 
-    public ObservableCollection<Ninja> NinjasInMemory()
+    public ObservableCollection<Post> NinjasInMemory()
     {
-      if (_context.Ninjas.Local.Count == 0)
+      if (_context.Posts.Local.Count == 0)
       {
         GetNinjas();
       }
-      return _context.Ninjas.Local;
+      return _context.Posts.Local;
     }
 
     public void Save()
@@ -47,30 +48,30 @@ namespace NinjaDomain.DataModel
       _context.SaveChanges();
     }
 
-    public Ninja NewNinja()
+    public Post NewNinja()
     {
-      var ninja = new Ninja();
-      _context.Ninjas.Add(ninja);
-      return ninja;
+      var post = new Post();
+      _context.Posts.Add(post);
+      return post;
     }
 
     private void RemoveEmptyNewNinjas()
     {
       //you can't remove from or add to a collection in a foreach loop
-      for (var i = _context.Ninjas.Local.Count; i > 0; i--)
+      for (var i = _context.Posts.Local.Count; i > 0; i--)
       {
-        var ninja = _context.Ninjas.Local[i - 1];
-        if (_context.Entry(ninja).State == EntityState.Added
-            && !ninja.IsDirty)
+        var post = _context.Posts.Local[i - 1];
+        if (_context.Entry(post).State == EntityState.Added
+            && !post.IsDirty)
         {
-          _context.Ninjas.Remove(ninja);
+          _context.Posts.Remove(post);
         }
       }
     }
 
-    public void DeleteCurrentNinja(Ninja ninja)
+    public void DeleteCurrentNinja(Post post)
     {
-      _context.Ninjas.Remove(ninja);
+      _context.Posts.Remove(post);
       Save();
     }
 

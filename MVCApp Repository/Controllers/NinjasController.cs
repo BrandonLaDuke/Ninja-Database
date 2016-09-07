@@ -12,8 +12,8 @@ namespace MVCApp.Controllers
     
     public ActionResult Index()
     {
-      var ninjas = _repo.GetNinjasWithClan();
-      return View(ninjas);
+      var posts = _repo.GetNinjasWithClan();
+      return View(posts);
     }
 
     public ActionResult Details(int? id)
@@ -22,12 +22,12 @@ namespace MVCApp.Controllers
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      var ninja = _repo.GetNinjaWithEquipmentAndClan(id.Value);
-      if (ninja == null)
+      var posts = _repo.GetNinjaWithEquipmentAndClan(id.Value);
+      if (posts == null)
       {
         return HttpNotFound();
       }
-      return View(ninja);
+      return View(posts);
     }
 
    public ActionResult Create()
@@ -39,7 +39,7 @@ namespace MVCApp.Controllers
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Create(
-      [Bind(Include = "Id,Name,ServedInOniwaban,ClanId,DateOfBirth,DateCreated,DateModified")] Ninja ninja)
+      [Bind(Include = "Id,Name,ServedInOniwaban,ClanId,DateOfBirth,DateCreated,DateModified")] Post post)
     {
       if (ModelState.IsValid)
       {
@@ -47,7 +47,7 @@ namespace MVCApp.Controllers
         return RedirectToAction("Index");
       }
 
-      ViewBag.ClanId = new SelectList(_repo.GetClanList(), "Id", "ClanName", ninja.ClanId);
+      ViewBag.ClanId = new SelectList(_repo.GetClanList(), "Id", "ClanName", post.ClanId);
       return View(ninja);
     }
 

@@ -57,6 +57,22 @@
     <Compile Include="Migrations\201608310039253_azure-trial.Designer.cs">
       <DependentUpon>201608310039253_azure-trial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609062333195_posts.cs" />
+    <Compile Include="Migrations\201609062333195_posts.Designer.cs">
+      <DependentUpon>201609062333195_posts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609070019537_test.cs" />
+    <Compile Include="Migrations\201609070019537_test.Designer.cs">
+      <DependentUpon>201609070019537_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609070045256_postname.cs" />
+    <Compile Include="Migrations\201609070045256_postname.Designer.cs">
+      <DependentUpon>201609070045256_postname.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609070119432_new.cs" />
+    <Compile Include="Migrations\201609070119432_new.Designer.cs">
+      <DependentUpon>201609070119432_new.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NinjaContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +89,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201608310039253_azure-trial.resx">
       <DependentUpon>201608310039253_azure-trial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609062333195_posts.resx">
+      <DependentUpon>201609062333195_posts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609070019537_test.resx">
+      <DependentUpon>201609070019537_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609070045256_postname.resx">
+      <DependentUpon>201609070045256_postname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609070119432_new.resx">
+      <DependentUpon>201609070119432_new.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
